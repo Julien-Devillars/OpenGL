@@ -39,7 +39,7 @@ The project use a vertex shader and a fragment shader.
 
   The second project present the different shader possibles which was introduce in the previous project under the term *SHADERNAME*, it follows the basic pipeline used by opengl.
 
-![pipepline](https://user-images.githubusercontent.com/45456710/94940554-efa34f80-04d3-11eb-8d7f-c26be9cefa2d.png)
+![pipeline](https://user-images.githubusercontent.com/45456710/94941030-9f78bd00-04d4-11eb-8315-c3f34b7dd3f5.png)
 
 ### Vertex Shader
 
