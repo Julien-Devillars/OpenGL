@@ -11,7 +11,7 @@ A basic project to draw a single point or a single triangle with OpenGL.
   * **Include a window library**, we are using GLFW3 for our project but SDL2 can works too.
   * **Initialize the window**, depending of the library, the window can be initialize differently. Don't forget to add the background color of the window with **glClearColor** and the size of the **Viewport**
   * **Create your program** with **glCreateProgram**
-  * **Add the different shader**
+  * **Add the different shaders**
     * shader_source code  
     * shader_type with GL_*SHADERNAME*_SHADER with *SHADERNAME* :
       * GL_VERTEX_SHADER
@@ -33,3 +33,16 @@ A basic project to draw a single point or a single triangle with OpenGL.
     * patches with **GL_PATCHES**
   
 The project use a vertex shader and a fragment shader.
+
+
+# GL2_AllShaders
+
+The second project present the different shader possibles which was introduce in the previous project under the term *SHADERNAME*, it follows the basic pipeline used by opengl.
+
+![pipeline-detail](https://user-images.githubusercontent.com/45456710/94932518-7c94db80-04c9-11eb-89d0-dae84ef9f7fb.png)
+
+## Vertex Shader
+## Tesselation Control Shader
+## Tesselation Evaluation Shader
+## Geometry Shader
+## Fragment Shader
