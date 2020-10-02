@@ -1,0 +1,50 @@
+#version 430
+
+layout (vertices = 3) out;
+
+void main()
+{
+
+	gl_TessLevelInner[0] = 6.0; // IN0 
+								// The number of triangles in the center
+								// 1 => 0
+								// 2 => 1 point
+								// 3 => 1 triangle
+								// 4 => 1 triangle with 1 inner point
+								// 5 => 1 triangle with 1 inner triangle
+								// 6 => 1 triangle with 1 inner triangle with 1 inner point
+								// etc
+
+	// Divide the triangle edge by the value;
+
+	gl_TessLevelOuter[0] = 5.0; // OL0
+	gl_TessLevelOuter[1] = 5.0; // OL1
+	gl_TessLevelOuter[2] = 5.0; // OL2 
+
+	/*
+	*
+	*
+	*					      /\
+	*					     /  \
+	*					    /    \
+	*					   /      \
+	*					  /	       \
+	*					 /	        \
+	*				OL0	/            \  OL2
+	*	               /      /\      \
+	*	              /      /  \      \
+	*	             /      /    \      \
+	*	            /      /      \      \
+	*	           /      /        \      \
+	*	          /      /__________\      \
+	*	         /            IN0           \
+	*	        /____________________________\ 
+	*						  OL1
+	*
+	*
+	*
+	*
+	*/
+
+	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
+}
