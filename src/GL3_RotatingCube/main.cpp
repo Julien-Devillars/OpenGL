@@ -175,30 +175,35 @@ void render(float deltaTime)
     //glClearBufferfv(GL_DEPTH, 0, &one);
 	
     shader->apply();
-
-    glm::mat4 mvMatrix = glm::mat4(1.0f);
-    mvMatrix *= glm::translate(
-        glm::mat4(1.0f),
-        zAxis * -4.0f);
-
-    
-	
-    mvMatrix *= glm::rotate(
-        glm::mat4(1.0f),
-        (float)deltaTime * glm::radians(45.0f),
-        zAxis);
-    
-    mvMatrix *= glm::translate(
-        glm::mat4(1.0f),
-        xAxis * static_cast<float>( sizeCube * 2));
-	
-	
-    shader->setUniform1f("colorValue", deltaTime);
     shader->setUniformMatrix4fv("projMatrix", projMatrix);
-    shader->setUniformMatrix4fv("mvMatrix", mvMatrix);
 
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-	
+    const int maxN = 10;
+    int N = std::min(maxN, static_cast<int>(deltaTime));
+
+	for(int i = 0 ; i < N; ++i)
+	{
+        glm::mat4 mvMatrix = glm::mat4(1.0f);
+        mvMatrix *= glm::translate(
+            glm::mat4(1.0f),
+            zAxis * -4.0f);
+
+        
+		
+        mvMatrix *= glm::rotate(
+            glm::mat4(1.0f),
+            (float)deltaTime * glm::radians(45.0f),
+            zAxis);
+        
+        mvMatrix *= glm::translate(
+            glm::mat4(1.0f),
+            xAxis * static_cast<float>(i * sizeCube * 2));
+		
+		
+        shader->setUniform1f("colorValue", static_cast<float>(i));
+        shader->setUniformMatrix4fv("mvMatrix", mvMatrix);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
     
 }
 
