@@ -39,16 +39,17 @@ Shader::Shader(const std::string& vertexShaderFilename,
         getchar();
         return;
     }
-    fprintf(stdout, "Adding Shaders for program %d", program_id);
+    fprintf(stdout, "Adding Shaders for program %d\n", program_id);
 
     for (int i = 0; i < sizeof(shaderCodes) / sizeof(std::string); ++i)
     {
-        fprintf(stderr, "%s : \n\n%s\n\n", filenames[i].c_str(), shaderCodes[i].c_str());
 
         if (shaderCodes[i].empty())
         {
             continue;
         }
+    	
+        fprintf(stderr, "%s : \n\n%s\n\n", filenames[i].c_str(), shaderCodes[i].c_str());
 
         GLuint shaderType = 0;
         

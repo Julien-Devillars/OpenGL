@@ -186,8 +186,6 @@ void render(float deltaTime)
         mvMatrix *= glm::translate(
             glm::mat4(1.0f),
             zAxis * -4.0f);
-
-        
 		
         mvMatrix *= glm::rotate(
             glm::mat4(1.0f),
@@ -199,7 +197,7 @@ void render(float deltaTime)
             xAxis * static_cast<float>(i * sizeCube * 2));
 		
 		
-        shader->setUniform1f("colorValue", static_cast<float>(i));
+        shader->setUniform1f("colorValue", static_cast<float>(i * 0.5f));
         shader->setUniformMatrix4fv("mvMatrix", mvMatrix);
 
         glDrawArrays(GL_TRIANGLES, 0, 36);

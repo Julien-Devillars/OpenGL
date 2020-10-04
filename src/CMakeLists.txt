@@ -8,3 +8,5 @@ configure_file(ProjectDir.h.in ProjectDir.h)
 
 add_subdirectory(GL1_BasicPoint)
 add_subdirectory(GL2_AllShaders)
+add_subdirectory(GL3_RotatingCube)
+add_subdirectory(GL4_Textures)
