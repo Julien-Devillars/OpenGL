@@ -41,8 +41,14 @@ add_library(GLAD "thirdparty/glad.c")
 # STB_IMAGE
 add_library(STB_IMAGE "thirdparty/stb_image.cpp")
 
+# ASSIMP
+# Open Asset Import Library (Assimp)
+# A portable Open-Source library to import various well-known 3D model formats in a uniform manner.
+find_package(ASSIMP REQUIRED)
+message(STATUS "Found ASSIMP in ${ASSIMP_INCLUDE_DIR}")
+
 # Put all libraries into a variable
-set(LIBS glfw3 opengl32 STB_IMAGE GLAD)
+set(LIBS glfw3 opengl32 assimp STB_IMAGE GLAD)
 
 # Define the include DIRs
 include_directories(
@@ -51,5 +57,6 @@ include_directories(
 
 add_subdirectory(src)
 
-# Define the link libraries
-# target_link_libraries(${PROJECT_NAME} ${LIBS})
+#Define the link libraries
+#target_link_libraries(${PROJECT_NAME} ${LIBS})
+

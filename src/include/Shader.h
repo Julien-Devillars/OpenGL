@@ -6,6 +6,7 @@
 
 #include <glad/glad.h>
 #include <glm\glm.hpp>
+#include "ProjectDir.h"
 
 #include <map>
 #include <string>

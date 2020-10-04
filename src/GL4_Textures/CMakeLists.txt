@@ -15,5 +15,11 @@ add_executable(${SUB_PROJECT_NAME}
 			)
 
 source_group("Shaders" FILES ${SHADERS})
+source_group("Include Files" FILES ${INCLUDE_SRC})
 
 target_link_libraries(${SUB_PROJECT_NAME} PUBLIC ${LIBS})
+
+add_custom_command(TARGET ${SUB_PROJECT_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+		"${PROJECT_SOURCE_DIR}/dlls"
+		$<TARGET_FILE_DIR:${SUB_PROJECT_NAME}>)

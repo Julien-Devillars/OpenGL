@@ -1,5 +1,6 @@
 #include <iostream>
-#include <glad/glad.h>-sizeCube
+#include <glad/glad.h>
+#include <stb_image.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -7,7 +8,9 @@
 #include <glm/gtc/constants.hpp>
 
 #include "../include/Shader.h"
-
+#include "../include/Texture.h"
+#include "../include/Mesh.h"
+#include "../include/Model.h"
 
 GLFWwindow* window;
 const int WINDOW_WIDTH = 1024;
@@ -15,11 +18,34 @@ const int WINDOW_HEIGHT = 1024;
 
 static const GLfloat sizeVertex = 0.75f;
 
-static const GLfloat vertex_positions[] = {
-    -sizeVertex,-sizeVertex,sizeVertex, // triangle 1 : begin
-    sizeVertex,sizeVertex, sizeVertex,
-    -sizeVertex, sizeVertex, sizeVertex, // triangle 1 : end
+static const std::vector<Vertex> vertices =
+{
+    {   glm::vec3(0.5f , 0.5f, 0.5f),
+    	glm::vec3(0.0f, 0.0f, 0.0f),
+    	glm::vec2(1.0f, 0.0f)
+    },
+    {   glm::vec3(-0.5f , 0.5f, 0.5f),
+    	glm::vec3(0.0f, 0.0f, 0.0f),
+    	glm::vec2(0.0f, 0.0f)
+    },
+    {   glm::vec3(-0.5f , -0.5f, 0.5f),
+    	glm::vec3(0.0f, 0.0f, 0.0f),
+    	glm::vec2(0.0f, 1.0f)
+    },
+    {   glm::vec3(0.5f , 0.5f, 0.5f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec2(1.0f, 0.0f)
+    },
+    {   glm::vec3(-0.5f , -0.5f, 0.5f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec2(0.0f, 1.0f)
+    },
+    {   glm::vec3(0.5f , -0.5f, 0.5f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec2(1.0f, 1.0f)
+    }
 };
+static const std::vector<unsigned int> indices = {0, 1, 2, 3, 4, 5};
 
 static const glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 static const glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -29,7 +55,9 @@ GLuint rendering_program;
 GLuint VAO;
 GLuint VBO;
 
-Shader* shader = nullptr;
+Shader* shader      = nullptr;
+Texture* texture    = nullptr;
+Model* mesh          = nullptr;
 
 glm::mat4 projMatrix = glm::perspectiveFov(glm::radians(60.0f), float(WINDOW_WIDTH), float(WINDOW_HEIGHT), 0.1f, 10.0f);;
 
@@ -57,7 +85,7 @@ int initWindow()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Draw a Rotating Cube !", nullptr, nullptr);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Add some Textures !", nullptr, nullptr);
 
     if (!window)
     {
@@ -90,19 +118,12 @@ int initWindow()
 int initDatas()
 {
 
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    mesh = new Model("GL4_Textures/res/cube.obj");
 
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER,
-        sizeof(vertex_positions),
-        vertex_positions,
-        GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
+	texture = new Texture();
+    texture->load("GL4_Textures/res/wall.jpg");
+    texture->bind();
+	
     shader = new Shader(
         "GL4_Textures/shaders/vertexShader.vert",
         "GL4_Textures/shaders/fragmentShader.frag");
@@ -123,19 +144,23 @@ void render(float deltaTime)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shader->apply();
 
     glm::mat4 mvMatrix = glm::mat4(1.0f);
     mvMatrix *= glm::translate(
         glm::mat4(1.0f),
         zAxis * -4.0f);
-
+	
+    mvMatrix *= glm::rotate(
+        glm::mat4(1.0f),
+        (float)deltaTime * glm::radians(90.0f),
+        xAxis + yAxis * deltaTime);
+	
     shader->setUniformMatrix4fv("mvMatrix", mvMatrix);
     shader->setUniformMatrix4fv("projMatrix", projMatrix);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    
-
+    shader->apply();
+    texture->bind();
+    mesh->Draw();
 }
 
 void update()

@@ -7,7 +7,6 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <fstream>
 #include <string>
-#include "ProjectDir.h"
 
 
 Shader::Shader(const std::string& vertexShaderFilename,
