@@ -1,7 +1,9 @@
 #version 430
 
-layout (location = 0) in vec4 offset;
-layout (location = 1) in vec4 color;
+layout (location = 0) in vec4 position;
+
+uniform mat4 mvMatrix;
+uniform mat4 projMatrix;
 
 // declare interface
 out VS_OUT
@@ -12,13 +14,6 @@ out VS_OUT
 void main()
 {
 
-	const vec4 vertices[3] = vec4[3](
-		vec4(0.5,0.5,0.5,1.0), 
-		vec4(-0.5,0.5,0.5,1.0), 
-		vec4(0.5,-0.5,0.5,1.0)
-			);
-		
-    gl_Position = vertices[gl_VertexID] + offset;
-	
-	vs_out.color = offset;
+    gl_Position = projMatrix * mvMatrix * position;
+	vs_out.color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }

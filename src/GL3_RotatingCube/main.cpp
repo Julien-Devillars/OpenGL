@@ -143,7 +143,6 @@ int initDatas()
         sizeof(vertex_positions), 
         vertex_positions, 
         GL_STATIC_DRAW);
-
 	
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
