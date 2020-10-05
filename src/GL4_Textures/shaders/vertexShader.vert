@@ -7,11 +7,14 @@ layout(location = 2) in vec3 texcoord;
 uniform mat4 mvMatrix;
 uniform mat4 projMatrix;
 
+uniform vec2 offset;
+
 out VS_OUT
 {
 	vec3 position;
 	vec3 normal;
 	vec2 texcoord;
+	vec2 offset;
 } vs_out;
 
 void main()
@@ -19,4 +22,5 @@ void main()
 
     gl_Position = projMatrix * mvMatrix * vec4(position, 1.0f);
 	vs_out.texcoord = texcoord.xy;
+	vs_out.offset = offset;
 }

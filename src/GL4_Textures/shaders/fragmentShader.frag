@@ -7,13 +7,12 @@ in VS_OUT
 	vec3 position;
 	vec3 normal;
 	vec2 texcoord;
+	vec2 offset;
 } fs_in;
 
 layout(binding = 0) uniform sampler2D myTexture;
 
 void main()
 {
-	color = vec4(texture(myTexture, fs_in.texcoord).xyz, 1.0f);
-	//texelFetch(myTexture, ivec2(gl_FragCoord.xy), 0);
-    //color = fs_in.color;
+	color = vec4(texture(myTexture, fs_in.texcoord + fs_in.offset).xyz, 1.0f);
 }

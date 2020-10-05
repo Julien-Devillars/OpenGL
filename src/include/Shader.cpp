@@ -162,7 +162,7 @@ void Shader::apply()
     }
     else
     {
-        fprintf(stderr, "Shader Apply Error");
+        fprintf(stderr, "Shader Apply Error\n");
     }
 }
 

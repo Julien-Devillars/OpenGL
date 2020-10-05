@@ -16,37 +16,6 @@ GLFWwindow* window;
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 1024;
 
-static const GLfloat sizeVertex = 0.75f;
-
-static const std::vector<Vertex> vertices =
-{
-    {   glm::vec3(0.5f , 0.5f, 0.5f),
-    	glm::vec3(0.0f, 0.0f, 0.0f),
-    	glm::vec2(1.0f, 0.0f)
-    },
-    {   glm::vec3(-0.5f , 0.5f, 0.5f),
-    	glm::vec3(0.0f, 0.0f, 0.0f),
-    	glm::vec2(0.0f, 0.0f)
-    },
-    {   glm::vec3(-0.5f , -0.5f, 0.5f),
-    	glm::vec3(0.0f, 0.0f, 0.0f),
-    	glm::vec2(0.0f, 1.0f)
-    },
-    {   glm::vec3(0.5f , 0.5f, 0.5f),
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec2(1.0f, 0.0f)
-    },
-    {   glm::vec3(-0.5f , -0.5f, 0.5f),
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec2(0.0f, 1.0f)
-    },
-    {   glm::vec3(0.5f , -0.5f, 0.5f),
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec2(1.0f, 1.0f)
-    }
-};
-static const std::vector<unsigned int> indices = {0, 1, 2, 3, 4, 5};
-
 static const glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
 static const glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
 static const glm::vec3 zAxis = glm::vec3(0.0f, 0.0f, 1.0f);
@@ -118,10 +87,10 @@ int initWindow()
 int initDatas()
 {
 
-    mesh = new Model("GL4_Textures/res/cube.obj");
+    mesh = new Model("datas/cube.obj");
 
 	texture = new Texture();
-    texture->load("GL4_Textures/res/wall.jpg");
+    texture->load("datas/wall.jpg");
     texture->bind();
 	
     shader = new Shader(
@@ -136,7 +105,9 @@ int initDatas()
 int deleteDatas()
 {
     delete shader;
-
+    delete mesh;
+    delete texture;
+	
     return true;
 }
 
@@ -157,6 +128,7 @@ void render(float deltaTime)
 	
     shader->setUniformMatrix4fv("mvMatrix", mvMatrix);
     shader->setUniformMatrix4fv("projMatrix", projMatrix);
+    shader->setUniform2fv("offset", glm::vec2(deltaTime, 0.0f));
 
     shader->apply();
     texture->bind();
