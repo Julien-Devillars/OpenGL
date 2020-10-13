@@ -27,7 +27,7 @@ public:
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     unsigned int VAO;
-
+    Mesh(){};
     /*  Functions  */
     // constructor
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
